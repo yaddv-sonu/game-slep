@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slap Your Boss</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <div class="game-ui">
+        <div class="title">SLAP YOUR BOSS</div>
+        <div class="message" id="message">AMAN JUST SLAPPED!</div>
+        <div class="slap-counter">Slaps: <span id="slapCount">0</span></div>
+        
+        <!-- Instructions Button -->
+        <button class="instructions-button" id="instructionsButton">?</button>
+        
+        <!-- Instructions Panel -->
+        <div class="instructions-panel" id="instructionsPanel">
+            <div class="instructions-content">
+                <h2>How to Play</h2>
+                <div class="instructions-section">
+                    <h3>Basic Controls</h3>
+                    <p>• Click to slap your boss</p>
+                    <p>• Press '1' for Super Slap (2x damage)</p>
+                    <p>• Press '2' for Combo Slap (1.5x damage)</p>
+                </div>
+                <div class="instructions-section">
+                    <h3>Game Modes</h3>
+                    <p>• Normal: Slap as much as you want</p>
+                    <p>• Time Attack: 60 seconds to slap as much as possible</p>
+                    <p>• Survival: Defeat the boss before he defeats you</p>
+                </div>
+                <div class="instructions-section">
+                    <h3>Slap Modes</h3>
+                    <div class="slap-modes">
+                        <button class="slap-mode-button" data-mode="normal">Normal Slap</button>
+                        <button class="slap-mode-button" data-mode="super">Super Slap</button>
+                        <button class="slap-mode-button" data-mode="combo">Combo Slap</button>
+                    </div>
+                </div>
+                <button class="close-instructions">Close</button>
+            </div>
+        </div>
+        
+        <!-- Health Bar -->
+        <div class="health-bar">
+            <div class="health-bar-label">BOSS HEALTH</div>
+            <div class="health-bar-container">
+                <div class="health-bar-fill" id="healthBar"></div>
+            </div>
+        </div>
+        
+        <!-- Game Mode Selection -->
+        <div class="game-mode" id="gameMode">
+            <button class="mode-button" data-mode="normal">Normal</button>
+            <button class="mode-button" data-mode="time">Time Attack</button>
+            <button class="mode-button" data-mode="survival">Survival</button>
+        </div>
+        
+       
+        
+        <!-- Achievements Panel -->
+        <div class="achievements-panel">
+            <div class="achievements-title">Achievements</div>
+            <div class="achievements-list" id="achievementsList">
+                <!-- Achievements will be added here dynamically -->
+            </div>
+        </div>
+        
+        <!-- High Score -->
+        <div class="high-score">High Score: <span id="highScore">0</span></div>
+        
+        <button class="slap-button" id="slapButton">SLAP</button>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html> 
