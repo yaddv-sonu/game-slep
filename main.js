@@ -101,29 +101,45 @@ const slapCountElement = document.getElementById('slapCount');
 
 // Create sound effects
 const slapSounds = {
-    normal: new Audio('slap.mp3'),
-    super: new Audio('super-slap.mp3'),
-    combo: new Audio('combo-slap.mp3')
+    normal: new Audio('/slap.mp3'),
+    super: new Audio('/super-slap.mp3'),
+    combo: new Audio('/combo-slap.mp3')
 };
 
 // Set volume for all sounds
 Object.values(slapSounds).forEach(sound => {
     sound.volume = 0.5;
-});
-
-const hurtSound = new Audio('young-man-being-hurt-95628.mp3');
-hurtSound.volume = 0.5;
-
-// Add error handling for sounds
-Object.values(slapSounds).forEach(sound => {
+    // Add error handling for each sound
     sound.addEventListener('error', (e) => {
         console.error(`Error loading ${sound.src}:`, e);
     });
+    // Preload sounds
+    sound.load();
 });
 
+const hurtSound = new Audio('/young-man-being-hurt-95628.mp3');
+hurtSound.volume = 0.5;
 hurtSound.addEventListener('error', (e) => {
     console.error('Error loading hurt sound:', e);
 });
+hurtSound.load();
+
+// Function to play sounds safely
+function playSound(sound) {
+    if (sound) {
+        try {
+            sound.currentTime = 0;
+            const playPromise = sound.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.error('Error playing sound:', error);
+                });
+            }
+        } catch (error) {
+            console.error('Error with sound playback:', error);
+        }
+    }
+}
 
 // Game state
 const gameState = {
@@ -408,20 +424,11 @@ function animate() {
                 if (progress > 0.75 && progress < 0.76) {
                     try {
                         // Play current slap mode sound
-                        const currentSound = slapSounds[currentSlapMode];
-                        currentSound.currentTime = 0;
-                        const slapPromise = currentSound.play();
-                        if (slapPromise !== undefined) {
-                            slapPromise.then(() => {
-                                // Play hurt sound after slap sound
-                                setTimeout(() => {
-                                    hurtSound.currentTime = 0;
-                                    hurtSound.play();
-                                }, 200);
-                            }).catch(error => {
-                                console.error('Error playing slap sound:', error);
-                            });
-                        }
+                        playSound(slapSounds[currentSlapMode]);
+                        // Play hurt sound after slap sound
+                        setTimeout(() => {
+                            playSound(hurtSound);
+                        }, 200);
                         
                         // Create particles for slap effect
                         const color = currentSlapMode === 'super' ? 0xff0000 : 
